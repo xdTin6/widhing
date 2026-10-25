@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14040d">
+<title>For You</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💌%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#14040d;--deep:#4b0f2b;--rose:#ff4d79;--blush:#ffd9e3;--gold:#f3c98b}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--wine);color:var(--blush);overflow:hidden}
+body{font:500 1.25rem/1.6 "Cormorant Garamond",Georgia,serif;-webkit-tap-highlight-color:transparent}
+#bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%,var(--deep),var(--wine) 72%)}
+#slides{position:absolute;inset:0;opacity:0;transition:opacity 2s}
+#slides.on{opacity:1}
+.sl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.8s ease}
+.sl.on{opacity:1;animation:kb 10s ease-out forwards}
+@keyframes kb{to{transform:scale(1.12)}}
+#veil{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(20,4,13,.2),rgba(20,4,13,.8)),linear-gradient(to top,rgba(20,4,13,.7),transparent 55%)}
+#veil::after{content:"";position:absolute;inset:0;background:rgba(20,4,13,.5);opacity:0;transition:opacity .8s}
+body.q #veil::after{opacity:1}
+#petals{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.p{position:absolute;top:-40px;width:14px;height:18px;border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ff8fab,#d6194f);animation:fall linear forwards}
+.p.h{background:none;border-radius:0;width:auto;height:auto}
+@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}10%{opacity:.85}90%{opacity:.85}100%{transform:translate(var(--dx),115vh) rotate(var(--rot));opacity:0}}
+#stage{position:fixed;inset:0;z-index:2;display:grid;place-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));overflow-y:auto;text-align:center}
+.scr{max-width:660px;width:100%;animation:rise 1.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.sc{font-family:"Great Vibes","Brush Script MT",cursive;font-weight:400;line-height:1.1;margin:0;color:#fff;text-shadow:0 2px 26px rgba(255,77,121,.6)}
+.big{font-size:clamp(3rem,13vw,5.6rem)}
+.small{margin:0;opacity:.8;font-style:italic;font-size:1.1rem}
+.seal{position:relative;width:104px;height:104px;border:0;margin:38px auto 22px;display:block;cursor:pointer;color:var(--gold);font-size:2.6rem;line-height:1;border-radius:50% 46% 52% 48% / 48% 52% 46% 50%;background:radial-gradient(circle at 34% 28%,#ff8aa5,#c4163f 55%,#6b0a29);box-shadow:inset 0 -6px 12px rgba(0,0,0,.35),inset 0 4px 8px rgba(255,255,255,.3),0 10px 40px rgba(255,77,121,.5);animation:beat 1.8s ease-in-out infinite}
+.seal::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:1px solid var(--rose);animation:ring 1.8s ease-out infinite}
+@keyframes beat{50%{transform:scale(1.07)}}
+@keyframes ring{from{opacity:.8;transform:scale(.9)}to{opacity:0;transform:scale(1.5)}}
+#line{min-height:4.4em;display:flex;align-items:center;justify-content:center;font-size:clamp(1.6rem,5.4vw,2.5rem);font-style:italic;font-weight:600;line-height:1.35;text-shadow:0 2px 18px rgba(0,0,0,.85);opacity:0;transform:translateY(10px);transition:opacity 1s,transform 1s}
+#line.in{opacity:1;transform:none}
+.btn{font:700 1.2rem "Cormorant Garamond",Georgia,serif;border:0;border-radius:999px;padding:.7em 1.8em;cursor:pointer;color:#fff;background:linear-gradient(135deg,#ff4d79,#d6194f);box-shadow:0 10px 30px rgba(255,77,121,.45);transition:font-size .35s,padding .35s,opacity .35s,transform .2s}
+.btn:active{transform:scale(.95)}
+.btn:focus-visible,.seal:focus-visible,#mute:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.no{background:rgba(255,255,255,.12);box-shadow:none;border:1px solid rgba(255,217,227,.35);color:var(--blush);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.row{display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:26px}
+#mute{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;z-index:5;display:none;border:1px solid rgba(255,217,227,.3);background:rgba(20,4,13,.45);color:var(--blush);border-radius:999px;font-size:1.1rem;padding:.3em .8em;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media(prefers-reduced-motion:reduce){.sl.on,.seal,.seal::after{animation:none}.p{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ============================ EDIT ONLY THIS BLOCK ============================
+  1. Make a folder called "media" next to this index.html and put your files in it.
+  2. Write the file paths below. Names are case-sensitive on GitHub Pages.
+  3. Videos: use .mp4 (H.264). Photos: .jpg / .png / .webp. Keep the quotes and commas.
+============================================================================== -->
+<script>
+const CONFIG = {
+  herName: "Kavyuuuuuu",
+  yourName: "Aarav",
+
+  music: "media/song.mp3",        // your song ("" for no music)
+  musicStart: 0,                  // start the song from this second (e.g. 45 to skip the intro)
+
+  // Her clips and photos. They play as a slideshow behind your words, in this order.
+  media: [
+    "media/clip1.MOV",
+    "media/clip2.MOV",
+    "media/clip3.MOV",
+    "media/clip4.MOV"
+  ],
+  slideSeconds: 6.5,              // seconds each photo/clip stays on screen
+
+  // Your words, shown one at a time. She taps to move on, or they advance by themselves.
+  lines: [
+    "From the first day I met you, ordinary days started to feel special.",
+    "Your smile makes my whole world softer.",
+    "I’ve kept these words in my heart for a long time…",
+    "So today, I’m finally brave enough to ask."
+  ],
+
+  question: "Will you be mine?",
+  yesLabel: "Yes 💖",
+  noLabel: "No",
+  // Each tap on No shows the next message and shrinks the button. After the last one, No disappears.
+  noMessages: [
+    "Think again… 🥺",
+    "Are you sure? 💔",
+    "Pretty please? 🌹",
+    "You’re breaking my heart 😢",
+    "Last chance, my love 💘",
+    "Okay… looks like there’s only one answer 💖"
+  ],
+
+  yesTitle: "Yesss! 💖",
+  yesText: "You just made {you} the happiest person in the world.",
+  yesFooter: "This is the beginning of something beautiful…"
+};
+</script>
+<!-- ============================== END OF EDIT BLOCK ============================ -->
+
+<div id="bg"><div id="slides"></div><div id="veil"></div></div>
+<div id="petals"></div>
+<main id="stage"></main>
+<button id="mute" aria-label="Mute or unmute the music">♪</button>
+<audio id="aud" loop preload="auto"></audio>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),C=CONFIG,S=$('#stage'),au=$('#aud');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const VID=/\.(mp4|webm|mov|m4v|ogv)(\?.*)?$/i;
+const show=h=>{S.innerHTML=h;S.scrollTop=0};
+let nc=0;
+document.title='For '+C.herName;
+
+/* falling petals, always on */
+function petal(){
+ const p=document.createElement('span'),s=.7+Math.random()*.9;p.className='p';
+ p.style.cssText='left:'+Math.random()*100+'%;width:'+14*s+'px;height:'+18*s+'px;--dx:'+(Math.random()*160-80)+'px;--rot:'+(Math.random()*720-360)+'deg;animation-duration:'+(8+Math.random()*8)+'s';
+ $('#petals').append(p);p.onanimationend=()=>p.remove();
+}
+setInterval(()=>{if($('#petals').children.length<28)petal()},600);
+
+/* slideshow: photos and clips. Missing files are skipped quietly. */
+const els=[];let cur=null;
+function slides(){
+ const box=$('#slides');
+ (C.media||[]).forEach(src=>{
+  const v=VID.test(src),e=document.createElement(v?'video':'img');e.className='sl';e.src=src;
+  if(v){e.muted=true;e.loop=true;e.playsInline=true;e.preload='metadata';e.setAttribute('muted','');e.setAttribute('playsinline','')}
+  e.onerror=()=>{e.dataset.bad=1;e.remove()};box.append(e);els.push(e);
+ });
+ box.classList.add('on');go();
+ if(els.length>1)setInterval(go,(C.slideSeconds||6.5)*1000);
+}
+function go(){
+ const L=els.filter(e=>!e.dataset.bad);if(!L.length)return;
+ const p=cur;cur=L[(L.indexOf(p)+1)%L.length];
+ if(p&&p!==cur){p.classList.remove('on');if(p.pause)setTimeout(()=>{if(p!==cur)p.pause()},2000)}
+ cur.classList.add('on');if(cur.play)cur.play().catch(()=>{});
+ const nx=L[(L.indexOf(cur)+1)%L.length];if(nx.tagName==='VIDEO')nx.preload='auto';
+}
+
+/* music starts on her first tap (browsers require a tap) */
+function music(){
+ if(!C.music)return;
+ au.src=C.music;au.volume=.8;
+ if(C.musicStart)au.addEventListener('loadedmetadata',()=>{au.currentTime=C.musicStart},{once:true});
+ au.play().then(()=>{$('#mute').style.display='block'}).catch(()=>{});
+}
+$('#mute').onclick=function(){au.muted=!au.muted;this.textContent=au.muted?'✕':'♪'};
+
+/* 1. the sealed letter */
+function cover(){
+ document.body.classList.remove('q');
+ show('<div class="scr"><p class="small">a letter for</p><h1 class="sc big">'+esc(C.herName)+'</h1><button class="seal" id="seal" aria-label="Open the letter">♥</button><p class="small">tap the seal to open</p></div>');
+ $('#seal').onclick=()=>{music();slides();story()};
+}
+
+/* 2. your words, one line at a time */
+function story(){
+ const L=C.lines||[];let k=0,t,busy=0;
+ show('<div class="scr"><div id="line" aria-live="polite"></div><p class="small" style="margin-top:2.2rem;opacity:.55">tap anywhere to continue</p></div>');
+ const box=$('#line');
+ const next=()=>{
+  if(busy)return;busy=1;setTimeout(()=>busy=0,900);clearTimeout(t);
+  if(k>=L.length){S.onclick=null;ask();return}
+  box.classList.remove('in');
+  setTimeout(()=>{const x=L[k++];box.textContent=x;box.classList.add('in');t=setTimeout(next,Math.max(3200,x.length*75))},k?700:200);
+ };
+ S.onclick=next;next();
+}
+
+/* 3. the question: only Yes counts, nothing is stored about No */
+function ask(){
+ nc=0;document.body.classList.add('q');
+ show('<div class="scr"><h1 class="sc big">'+esc(C.question)+'</h1><p id="hint" class="small" style="min-height:2em;margin-top:1rem"></p><div class="row"><button class="btn" id="yes">'+esc(C.yesLabel)+'</button><button class="btn no" id="no">'+esc(C.noLabel)+'</button></div></div>');
+ const y=$('#yes'),n=$('#no'),M=C.noMessages||[],max=Math.max(M.length,1);
+ y.onclick=celebrate;
+ n.onclick=()=>{
+  nc++;$('#hint').textContent=M[Math.min(nc,M.length)-1]||'';
+  y.style.fontSize=(1.2+nc*.3)+'rem';y.style.padding='.7em '+(1.8+nc*.55)+'em';
+  if(nc>=max){n.style.opacity=0;n.style.pointerEvents='none';setTimeout(()=>n.remove(),450)}
+  else{n.style.fontSize=(1.2*Math.pow(.72,nc))+'rem';n.style.padding=(.7*Math.pow(.8,nc))+'em '+(1.8*Math.pow(.72,nc))+'em'}
+ };
+}
+
+/* 4. she said yes */
+function celebrate(){
+ document.body.classList.remove('q');
+ show('<div class="scr"><h1 class="sc big">'+esc(C.yesTitle)+'</h1><p style="font-size:1.6rem;margin:1rem 0 .4rem">'+esc(String(C.yesText||'').replace('{you}',C.yourName))+'</p><p class="small" style="color:var(--gold)">'+esc(C.yesFooter)+'</p></div>');
+ for(let i=0;i<80;i++)setTimeout(burst,i*28);
+ let n=0;const r=setInterval(()=>{for(let j=0;j<3;j++)rain();if(++n>45)clearInterval(r)},250);
+}
+function rain(){
+ const p=document.createElement('span');p.className='p h';p.textContent=['💖','💗','🌹','💕'][Math.random()*4|0];
+ p.style.cssText='left:'+Math.random()*100+'%;font-size:'+(18+Math.random()*22)+'px;--dx:'+(Math.random()*120-60)+'px;--rot:'+(Math.random()*180-90)+'deg;animation-duration:'+(5+Math.random()*5)+'s';
+ $('#petals').append(p);p.onanimationend=()=>p.remove();
+}
+function burst(){
+ const e=document.createElement('span');e.textContent=['💖','💗','🌹','✨','💕','🥰'][Math.random()*6|0];
+ e.style.cssText='position:fixed;left:50%;top:45%;z-index:9;pointer-events:none;font-size:'+(18+Math.random()*28)+'px';document.body.append(e);
+ const a=Math.random()*6.283,d=140+Math.random()*340;
+ e.animate([{transform:'translate(-50%,-50%) scale(.3)',opacity:1},{transform:'translate(calc(-50% + '+Math.cos(a)*d+'px),calc(-50% + '+(Math.sin(a)*d+140)+'px)) scale(1.2) rotate('+Math.random()*360+'deg)',opacity:0}],{duration:1800+Math.random()*1400,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>e.remove();
+}
+
+cover();
+})();
+</script>
+</body>
+</html>
